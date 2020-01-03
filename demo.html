@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas高级</title>
+    <style>
+        html,body{
+            /* width: 100%;
+            height: 100%; */
+            margin: 0;
+        }
+        canvas{
+            display: block;
+            margin: 50px auto 0;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="500" height="500"></canvas>
+    <button>下载</button>
+
+    <script>
+        let canvas=document.querySelector("canvas"),
+            canCon=canvas.getContext("2d"),
+            path1=new Path2D(),
+            btn=document.querySelector("button"),
+            imgData;
+        
+        // path1.moveTo(200,200);
+        // path1.lineTo(400,400);
+        // path1.lineTo(0,400);
+        // path1.lineTo(200,200);
+
+        // path1.arc(250,250,25,0,Math.PI*2);
+        // path1.arc(250,250,50,0,Math.PI*2);
+        // path1.arc(250,250,75,0,Math.PI*2);
+        // path1.arc(250,250,100,0,Math.PI*2);
+        // path1.arc(250,250,120,0,Math.PI*2);
+
+        // canCon.fillStyle="red";
+        // canCon.fillRect(0,0,500,500);
+
+        // canCon.clip(path1,"evenodd");//设置剪切效果，Path2D对象,剪切样式设置，剪切样式默认为nonzero，evenodd为奇偶环绕
+        // canCon.fillStyle="#fff";
+        // canCon.fillRect(0,0,500,500);
+
+        // +function setSize(){
+        //     window.onresize=arguments.callee;
+
+        //     document.body.width=window.innerWidth;
+        //     document.body.height=window.innerHeight;
+
+        //     canvas.width=window.innerWidth;
+        //     canvas.height=window.innerHeight;
+        // }();
+        let img=new Image();
+        img.src="images/1.jpg";
+        img.onload=function(){
+            canCon.drawImage(img,0,0,500,500);
+            imgData=canCon.getImageData(0,0,500,500);//获取像素点的值，获取起始点x,y,获取的宽度,获取的高度
+            canCon.putImageData(imgData,50,50);//设置像素点的值，值,设置的起始点x,y
+            canCon.imageSmoothingEnabled=true;//设置圆滑过渡效果，默认为true开启状态
+        }
+
+        btn.addEventListener("click",function(){
+            let newImgData=canvas.toDataURL("images/png",1);
+            let downA=document.createElement("a");
+            downA.href=newImgData;
+            downA.download="2.png";
+            downA.click();
+        })
+        
+    </script>
+</body>
+</html>
